@@ -58,8 +58,8 @@ $ npm run start
 
 ## 安裝 redux相關套件
 ```sh
-npm install --save redux
-npm install --save react-redux
+$ npm install --save redux
+$ npm install --save react-redux
 ```
 
 
