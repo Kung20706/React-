@@ -56,6 +56,12 @@ $ cd web
 $ npm run start
 ```
 
+## 安裝 redux相關套件
+```sh
+npm install --save redux
+npm install --save react-redux
+```
+
 
 # 參考
 - [redux介紹](http://taobaofed.org/blog/2016/08/18/react-redux-connect/)
