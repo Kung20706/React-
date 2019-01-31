@@ -55,3 +55,9 @@ $ cd web
 $ npm run start
 ```
 
+
+# 參考
+
+- [react-redux範例程式](https://github.com/xnng/react-redux-practice/tree/master/react-redux)
+- [redux介紹](http://taobaofed.org/blog/2016/08/18/react-redux-connect/)
+- [redux介紹](http://www.superbug.me/2018/02/06/react-redux-tutorial-for-beginners-learning-redux-in-2018/)
