@@ -60,5 +60,5 @@ $ npm run start
 - [redux介紹](http://taobaofed.org/blog/2016/08/18/react-redux-connect/)
 - [redux介紹](http://www.superbug.me/2018/02/06/react-redux-tutorial-for-beginners-learning-redux-in-2018/)
 - [react-redux範例程式](https://github.com/xnng/react-redux-practice/tree/master/react-redux)
-- [react-redux範例程式]https://github.com/lya79/todo_app/tree/master/react-redux-app)
+- [react-redux範例程式](https://github.com/lya79/todo_app/tree/master/react-redux-app)
 - [react-redux範例程式](https://github.com/lya79/todo_app/tree/master/react-redux-app-v2)
