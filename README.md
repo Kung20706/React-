@@ -5,6 +5,7 @@
 - golang
 - beego
 - react
+- react-redux
 - material-ui
 
 # 說明
