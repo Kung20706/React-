@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import SignInApp from './signIn/App';
-import TodoApp from './todo/App';
+import Todo from './Todo';
+import AddNewTask from './AddNewTask';
 
 
 class App extends Component {
   render() {
     return (
       <div>
-        {/* <SignInApp /> */}
-        <TodoApp />
+        <AddNewTask />
+        <Todo />
       </div>
     );
   }
