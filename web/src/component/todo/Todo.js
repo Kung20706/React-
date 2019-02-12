@@ -22,6 +22,7 @@ import green from '@material-ui/core/colors/green';
 import PageviewIcon from '@material-ui/icons/Pageview';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import DoneIcon from '@material-ui/icons/Done';
+import AddNewTask from './AddNewTask';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -101,9 +102,7 @@ function App(props) {
             <div className={classes.heroButtons}>
               <Grid container spacing={16} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
-                    Add Task
-                  </Button>
+                  <AddNewTask />
                 </Grid>
                 <Grid item>
                   <Button variant="outlined">
