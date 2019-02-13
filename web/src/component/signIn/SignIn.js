@@ -12,7 +12,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import uuidv1 from "uuid";
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import { connect } from "react-redux";
 import { updateToken } from "../../redux/actions/update_token";
 
@@ -54,13 +56,38 @@ const styles = theme => ({
   },
 });
 
+function signIn(email, pwd, callback){
+  let url = 'http://localhost:8080/todo-list/login?email='+email+'&pwd='+pwd; // XXX
+  fetch(url,{
+      method: 'POST',
+  }).then(function checkStatus(response) {
+      if (response.status >= 200 && response.status < 300) {
+          return response.json();
+      }else {
+          var error = new Error(response.statusText)
+          error.response = response;
+          throw error;
+      }
+  }).then(function(data) {
+      console.log('request successful', data); 
+      var dataStr = JSON.stringify(data)
+      var obj = JSON.parse(dataStr);
+      callback(obj.token)
+  }).catch(function(error) {
+      console.log('request failed status', error);
+      callback('')
+  });
+}
+
 class SignIn extends Component {
   constructor() {
     super();
 
     this.state = {
-      email: "",
-      pwd:"",
+      open: false,
+      info: '',
+      email: '',
+      pwd: '',
     };
 
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
@@ -68,6 +95,18 @@ class SignIn extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  handleClick = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ open: false });
+  };
 
   handleChangeEmail(event) {
     this.setState({ email: event.target.value });
@@ -89,16 +128,25 @@ class SignIn extends Component {
       return;
     }
 
-    // TODO 檢查是否登入成功
-    let SignInSuccessful = false;
+    // 檢查是否登入成功
     let token = '';
-
-    if(!SignInSuccessful || token.length == 0 ){
-      console.log('console sign in fail, email:'+ this.state.email+", pwd:"+ this.state.pwd+", token:"+token);
-      return;
+    let self = this;
+    var callbackSignIn = function(token){ 
+      if(undefined === token || token.length == 0){
+        console.log('console, fail sign in, email:'+ self.state.email+", pwd:"+ self.state.pwd+", token:"+token);
+        self.setState({
+          open: true,
+          info: 'Sign in failed.'
+        });
+        return;
+      }
+      self.setState({
+        open: true,
+        info: 'You are now successfully signed in.'
+      });
+      self.props.updateToken(token);
     }
-
-    this.props.updateToken(token);
+    signIn(this.state.email, this.state.pwd, callbackSignIn);
   }
 
   render() {
@@ -138,6 +186,30 @@ class SignIn extends Component {
           </Button>
         </form>
       </Paper>
+      <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          open={this.state.open}
+          autoHideDuration={3000}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{this.state.info}</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              className={classes.close}
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
     </main>
     );
   }
