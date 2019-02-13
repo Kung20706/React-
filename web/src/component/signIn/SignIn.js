@@ -14,11 +14,11 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import uuidv1 from "uuid";
 import { connect } from "react-redux";
-import { addArticle } from "../../redux/actions/index";
+import { updateToken } from "../../redux/actions/update_token";
 
 const mapDispatchToProps = dispatch => {
   return {
-    addArticle: article => dispatch(addArticle(article))
+    updateToken: token => dispatch(updateToken(token))
   };
 };
 
@@ -80,21 +80,25 @@ class SignIn extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    // console.log('console email:'+this.state.email);
-    // console.log('console pwd:'+this.state.pwd);
+    // 檢查是否有輸入欄位
+    let fieldEmpty = false;
+    fieldEmpty = fieldEmpty || this.state.email.length == 0
+    fieldEmpty = fieldEmpty || this.state.pwd.length == 0
+    if(fieldEmpty){
+      console.log('console fieldEmpty, email:'+ this.state.email+", pwd:"+ this.state.pwd);
+      return;
+    }
 
-    // TODO 檢查是否有輸入
+    // TODO 檢查是否登入成功
+    let SignInSuccessful = false;
+    let token = '';
 
-    // TODO 登入
-    //      檢查回傳是否登入成功
+    if(!SignInSuccessful || token.length == 0 ){
+      console.log('console sign in fail, email:'+ this.state.email+", pwd:"+ this.state.pwd+", token:"+token);
+      return;
+    }
 
-    // TODO 登入成功則進入待辦事項
-    //      登入失敗則提示失敗
-
-    const { email } = this.state;
-    // const id = uuidv1();
-    // this.props.addArticle({ email, id });
-    this.props.addArticle({ email });
+    this.props.updateToken(token);
   }
 
   render() {

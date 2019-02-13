@@ -1,10 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import logger from 'redux-logger'
-import rootReducer from "../reducers/index";
+import updateToken from "../reducers/updateToken";
 
 const store = createStore(
     combineReducers({
-        rootReducer
+        updateToken,
     }),
     {},
     applyMiddleware(logger)
