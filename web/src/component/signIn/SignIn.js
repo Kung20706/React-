@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -12,6 +12,15 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import uuidv1 from "uuid";
+import { connect } from "react-redux";
+import { addArticle } from "../../redux/actions/index";
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addArticle: article => dispatch(addArticle(article))
+  };
+};
 
 const styles = theme => ({
   main: {
@@ -45,11 +54,54 @@ const styles = theme => ({
   },
 });
 
-function SignIn(props) {
-  const { classes } = props;
+class SignIn extends Component {
+  constructor() {
+    super();
 
-  return (
-    <main className={classes.main}>
+    this.state = {
+      email: "",
+      pwd:"",
+    };
+
+    this.handleChangeEmail = this.handleChangeEmail.bind(this);
+    this.handleChangePwd = this.handleChangePwd.bind(this);
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChangeEmail(event) {
+    this.setState({ email: event.target.value });
+  }
+
+  handleChangePwd(event) {
+    this.setState({ pwd: event.target.value });
+  }
+  
+  handleSubmit(event) {
+    event.preventDefault();
+
+    // console.log('console email:'+this.state.email);
+    // console.log('console pwd:'+this.state.pwd);
+
+    // TODO 檢查是否有輸入
+
+    // TODO 登入
+    //      檢查回傳是否登入成功
+
+    // TODO 登入成功則進入待辦事項
+    //      登入失敗則提示失敗
+
+    const { email } = this.state;
+    // const id = uuidv1();
+    // this.props.addArticle({ email, id });
+    this.props.addArticle({ email });
+  }
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <main className={classes.main}>
       <CssBaseline />
       <Paper className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -58,14 +110,14 @@ function SignIn(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={this.handleSubmit}>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
+            <Input id="email" name="email" autoComplete="email"  autoFocus onChange={this.handleChangeEmail} />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
+            <Input name="password" type="password" id="password" autoComplete="current-password" onChange={this.handleChangePwd} />
           </FormControl>
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -83,11 +135,14 @@ function SignIn(props) {
         </form>
       </Paper>
     </main>
-  );
+    );
+  }
 }
 
 SignIn.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SignIn);
+// export default withStyles(styles)(SignIn);
+
+export default withStyles(styles)(connect(null, mapDispatchToProps)(SignIn));
