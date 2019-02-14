@@ -1,7 +1,6 @@
 package todo
 
 import (
-	"encoding/json"
 	"log"
 	"todo_app/service/controllers/todo/db"
 	"todo_app/service/controllers/todo/jwt"
@@ -69,7 +68,7 @@ func (this *TodoListController) InitDB() {
 
 	if todoListDB == nil {
 		todoListDB = &db.TodoListDB{}
-		this.addTestCase()
+		// this.addTestCase()
 	}
 
 	if jwtTool == nil {
@@ -104,7 +103,7 @@ func (this *TodoListController) RepleaceAll() {
 
 	err := todoListDB.RepleaceAll(jsoninfo)
 	if err != nil {
-		log.Println("fail addTestCase,", err)
+		log.Println("fail RepleaceAll,", err)
 		this.Ctx.Output.SetStatus(400)
 		this.Data["json"] = "400 (Bad Request)"
 		this.ServeJSON()
@@ -172,49 +171,49 @@ func (this *TodoListController) Logout() {
 	this.ServeJSON()
 }
 
-func (this *TodoListController) addTestCase() { // TODO
-	log.Println("addTestCase")
+// func (this *TodoListController) addTestCase() { // TODO
+// 	log.Println("addTestCase")
 
-	var arr [5]db.TodoItem
+// 	var arr [5]db.TodoItem
 
-	item := db.TodoItem{}
-	item.Selected = false
-	item.Text = "aaa"
-	arr[0] = item
+// 	item := db.TodoItem{}
+// 	item.Selected = false
+// 	item.Text = "aaa"
+// 	arr[0] = item
 
-	item = db.TodoItem{}
-	item.Selected = true
-	item.Text = "bbb"
-	arr[1] = item
+// 	item = db.TodoItem{}
+// 	item.Selected = true
+// 	item.Text = "bbb"
+// 	arr[1] = item
 
-	item = db.TodoItem{}
-	item.Selected = false
-	item.Text = "ccc"
-	arr[2] = item
+// 	item = db.TodoItem{}
+// 	item.Selected = false
+// 	item.Text = "ccc"
+// 	arr[2] = item
 
-	item = db.TodoItem{}
-	item.Selected = true
-	item.Text = "ddd"
-	arr[3] = item
+// 	item = db.TodoItem{}
+// 	item.Selected = true
+// 	item.Text = "ddd"
+// 	arr[3] = item
 
-	item = db.TodoItem{}
-	item.Selected = false
-	item.Text = "eee"
-	arr[4] = item
+// 	item = db.TodoItem{}
+// 	item.Selected = false
+// 	item.Text = "eee"
+// 	arr[4] = item
 
-	log.Println("json.Marshal arr,", arr)
+// 	log.Println("json.Marshal arr,", arr)
 
-	b, err := json.Marshal(arr)
-	if err != nil {
-		log.Println("json.Marshal err:", err)
-		return
-	}
-	jsonStr := string(b)
-	log.Println("json.Marshal b,", string(b))
-	log.Println("json.Marshal jsonStr,", jsonStr)
+// 	b, err := json.Marshal(arr)
+// 	if err != nil {
+// 		log.Println("json.Marshal err:", err)
+// 		return
+// 	}
+// 	jsonStr := string(b)
+// 	log.Println("json.Marshal b,", string(b))
+// 	log.Println("json.Marshal jsonStr,", jsonStr)
 
-	err = todoListDB.RepleaceAll(jsonStr)
-	if err != nil {
-		log.Println("fail addTestCase,", err)
-	}
-}
+// 	err = todoListDB.RepleaceAll(jsonStr)
+// 	if err != nil {
+// 		log.Println("fail addTestCase,", err)
+// 	}
+// }
