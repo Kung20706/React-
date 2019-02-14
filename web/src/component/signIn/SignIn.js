@@ -15,7 +15,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import PostSignIn from './PostSignIn';
+import PostSignIn from './HttpMethods/PostSignIn';
 import { connect } from "react-redux";
 import { updateToken } from "../../redux/actions/update_token";
 
