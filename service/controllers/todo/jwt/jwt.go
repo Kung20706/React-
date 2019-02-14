@@ -52,7 +52,7 @@ func (this *JWT) ValidatJWT(tokenString string) (string, int64, error) {
 	})
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		log.Println("success parse,")
+		// log.Println("success parse,")
 
 		var username string
 		var expires int64
@@ -69,7 +69,7 @@ func (this *JWT) ValidatJWT(tokenString string) (string, int64, error) {
 
 		if claims[tag_expires] != nil {
 			value, ok := claims[tag_expires].(float64)
-			log.Println(tag_expires, ":", expires, ", ok:", ok)
+			// log.Println(tag_expires, ":", expires, ", ok:", ok)
 			if ok {
 				expires = int64(value)
 			}

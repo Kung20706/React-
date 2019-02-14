@@ -1,6 +1,7 @@
 package jwt
 
 import (
+	"log"
 	"testing"
 	"time"
 )
@@ -18,7 +19,7 @@ func Test_jwt(t *testing.T) {
 		t.Log("CreateJWT, err", err)
 		t.Fail()
 	}
-	t.Log("token:", token)
+	// t.Log("token:", token)
 
 	if token == "" {
 		t.Log("CreateJWT, token empty")
@@ -26,8 +27,6 @@ func Test_jwt(t *testing.T) {
 	}
 
 	for i := 0; i < 7; i++ {
-		time.Sleep(1 * time.Second)
-
 		username2, expires2, err := obj.ValidatJWT(token)
 
 		if err != nil {
@@ -47,14 +46,8 @@ func Test_jwt(t *testing.T) {
 
 		expired := obj.IsExpired(expires2)
 
-		if i < expires && expired {
-			t.Log("error expired, ", expired, ", i:", i)
-			t.Fail()
-		} else if i >= expires && !expired {
-			t.Log("error expired, ", expired, ", i:", i)
-			t.Fail()
-		}
+		log.Println("IsExpired, ", expired)
 
-		t.Log("IsExpired, ", expired)
+		time.Sleep(1 * time.Second)
 	}
 }
