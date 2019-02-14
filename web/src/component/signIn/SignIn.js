@@ -15,6 +15,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import PostSignIn from './PostSignIn';
 import { connect } from "react-redux";
 import { updateToken } from "../../redux/actions/update_token";
 
@@ -55,29 +56,6 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
   },
 });
-
-function signIn(username, pwd, callback){
-  let url = 'http://localhost:8080/todo-list/login?username='+username+'&pwd='+pwd; // XXX
-  fetch(url,{
-      method: 'POST',
-  }).then(function checkStatus(response) {
-      if (response.status >= 200 && response.status < 300) {
-          return response.json();
-      }else {
-          var error = new Error(response.statusText)
-          error.response = response;
-          throw error;
-      }
-  }).then(function(data) {
-      console.log('request successful', data); 
-      var dataStr = JSON.stringify(data)
-      var obj = JSON.parse(dataStr);
-      callback(obj.token)
-  }).catch(function(error) {
-      console.log('request failed status', error);
-      callback('')
-  });
-}
 
 class SignIn extends Component {
   constructor() {
@@ -121,18 +99,17 @@ class SignIn extends Component {
 
     // 檢查是否有輸入欄位
     let fieldEmpty = false;
-    fieldEmpty = fieldEmpty || this.state.username.length == 0
-    fieldEmpty = fieldEmpty || this.state.pwd.length == 0
+    fieldEmpty = fieldEmpty || this.state.username.length <= 0
+    fieldEmpty = fieldEmpty || this.state.pwd.length <= 0
     if(fieldEmpty){
       console.log('console fieldEmpty, username:'+ this.state.username+", pwd:"+ this.state.pwd);
       return;
     }
 
     // 檢查是否登入成功
-    let token = '';
     let self = this;
     var callbackSignIn = function(token){ 
-      if(undefined === token || token.length == 0){
+      if(undefined === token || token.length <= 0){
         console.log('console, fail sign in, username:'+ self.state.username+", pwd:"+ self.state.pwd+", token:"+token);
         self.setState({
           open: true,
@@ -146,7 +123,7 @@ class SignIn extends Component {
       });
       self.props.updateToken(token);
     }
-    signIn(this.state.username, this.state.pwd, callbackSignIn);
+    PostSignIn(this.state.username, this.state.pwd, callbackSignIn);
   }
 
   render() {

@@ -13,7 +13,7 @@ class App extends Component {
 
     console.log('console token:'+token);
 
-    if(undefined === token || token.length == 0){
+    if(undefined === token || token.length <= 0){
       return (
         <div>
           <SignInApp />
