@@ -56,8 +56,8 @@ const styles = theme => ({
   },
 });
 
-function signIn(email, pwd, callback){
-  let url = 'http://localhost:8080/todo-list/login?email='+email+'&pwd='+pwd; // XXX
+function signIn(username, pwd, callback){
+  let url = 'http://localhost:8080/todo-list/login?username='+username+'&pwd='+pwd; // XXX
   fetch(url,{
       method: 'POST',
   }).then(function checkStatus(response) {
@@ -86,11 +86,11 @@ class SignIn extends Component {
     this.state = {
       open: false,
       info: '',
-      email: '',
+      username: '',
       pwd: '',
     };
 
-    this.handleChangeEmail = this.handleChangeEmail.bind(this);
+    this.handleChangeUsername = this.handleChangeUsername.bind(this);
     this.handleChangePwd = this.handleChangePwd.bind(this);
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -108,8 +108,8 @@ class SignIn extends Component {
     this.setState({ open: false });
   };
 
-  handleChangeEmail(event) {
-    this.setState({ email: event.target.value });
+  handleChangeUsername(event) {
+    this.setState({ username: event.target.value });
   }
 
   handleChangePwd(event) {
@@ -121,10 +121,10 @@ class SignIn extends Component {
 
     // 檢查是否有輸入欄位
     let fieldEmpty = false;
-    fieldEmpty = fieldEmpty || this.state.email.length == 0
+    fieldEmpty = fieldEmpty || this.state.username.length == 0
     fieldEmpty = fieldEmpty || this.state.pwd.length == 0
     if(fieldEmpty){
-      console.log('console fieldEmpty, email:'+ this.state.email+", pwd:"+ this.state.pwd);
+      console.log('console fieldEmpty, username:'+ this.state.username+", pwd:"+ this.state.pwd);
       return;
     }
 
@@ -133,20 +133,20 @@ class SignIn extends Component {
     let self = this;
     var callbackSignIn = function(token){ 
       if(undefined === token || token.length == 0){
-        console.log('console, fail sign in, email:'+ self.state.email+", pwd:"+ self.state.pwd+", token:"+token);
+        console.log('console, fail sign in, username:'+ self.state.username+", pwd:"+ self.state.pwd+", token:"+token);
         self.setState({
           open: true,
           info: 'Sign in failed.'
         });
         return;
       }
-      self.setState({
+      self.setState({ // FIXME 登入成功時並沒有出現
         open: true,
         info: 'You are now successfully signed in.'
       });
       self.props.updateToken(token);
     }
-    signIn(this.state.email, this.state.pwd, callbackSignIn);
+    signIn(this.state.username, this.state.pwd, callbackSignIn);
   }
 
   render() {
@@ -164,8 +164,8 @@ class SignIn extends Component {
         </Typography>
         <form className={classes.form} onSubmit={this.handleSubmit}>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email"  autoFocus onChange={this.handleChangeEmail} />
+            <InputLabel htmlFor="username">Username</InputLabel>
+            <Input id="username" name="username"  autoFocus onChange={this.handleChangeUsername} />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
