@@ -5,7 +5,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Todo />
+        <Todo token={this.props.token} />
       </div>
     );
   }

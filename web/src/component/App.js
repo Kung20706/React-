@@ -11,8 +11,6 @@ class App extends Component {
   render() {
     const { token } = this.props
 
-    console.log('console token:'+token);
-
     if(undefined === token || token.length <= 0){
       return (
         <div>
@@ -23,7 +21,7 @@ class App extends Component {
 
     return (
       <div>
-        <TodoApp />
+        <TodoApp token={token}/>
       </div>
     );
   }

@@ -14,6 +14,7 @@ type TodoListDB struct {
 type TodoItem struct {
 	Selected bool
 	Text     string
+	Content  string
 }
 
 func (this *TodoListDB) RepleaceAll(jsonStr string) error {

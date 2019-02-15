@@ -47,14 +47,23 @@ func (this *TodoListController) Prepare() {
 
 	authorized := false
 
+	log.Println("check")
+
 	tokenStr := this.Ctx.Input.Query(REQ_PARAMETERS_TOKEN)
 	if tokenStr != "" && userToken == tokenStr {
 		username2, expires2, err := jwtTool.ValidatJWT(tokenStr)
 		log.Println("username:", username2, ",  expires:", expires2, ",IsExpiredL", jwtTool.IsExpired(expires2), ", err:", err)
-		if err != nil || expires2 <= 0 || username2 == "" || jwtTool.IsExpired(expires2) {
+		if err == nil && expires2 > 0 && username2 != "" && !jwtTool.IsExpired(expires2) {
 			authorized = true
 		}
+		log.Println("check err != nil:", err != nil)
+		log.Println("check expires2 <= 0:", expires2 <= 0)
+		log.Println("check username2 == \"\":", username2 == "")
+		log.Println("check jwtTool.IsExpired(expires2):", jwtTool.IsExpired(expires2))
 	}
+
+	log.Println("check tokenStr:", tokenStr)
+	log.Println("check userToken == tokenStr:", userToken == tokenStr)
 
 	if !authorized {
 		this.Ctx.Output.SetStatus(401)
@@ -73,6 +82,9 @@ func (this *TodoListController) InitDB() {
 
 	if jwtTool == nil {
 		jwtTool = &jwt.JWT{}
+		secret := "sdwefwfefhgwed"
+		expires := 9999
+		jwtTool.Init(secret, int64(expires))
 	}
 }
 

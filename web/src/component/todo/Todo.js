@@ -1,16 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+// import classNames from 'classnames';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
+// import Card from '@material-ui/core/Card';
+// import CardActions from '@material-ui/core/CardActions';
+// import CardContent from '@material-ui/core/CardContent';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import CardHeader from '@material-ui/core/CardHeader';
+// import CardHeader from '@material-ui/core/CardHeader';
 import green from '@material-ui/core/colors/green';
 import AddNewTask from './AddNewTask';
+import GetQuery from './HttpMethods/GetQuery';
+// import TodoItemDetail from'./TodoItemDetail';
+import TodoList from'./TodoList.js';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -69,75 +72,106 @@ const styles = theme => ({
   },
 });
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+class App extends React.Component {
+  state = {
+    itemList: [],
+  };
 
-function App(props) {
-  const { classes } = props;
+  componentDidMount(){
+    let self = this;
+    var callRepleaceAll = function(data){ 
+      if(!data){
+        console.log('request fail data:', data); 
+        return
+      }
 
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <main>
-        {/* Hero unit */}
-        <div className={classes.heroUnit}>
-          <div className={classes.heroContent}>
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                To-Do
-            </Typography>
-            <Typography variant="h6" align="center" color="textSecondary" paragraph>
-                Very simple To-Do List.
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={16} justify="center">
-                <Grid item>
-                  <AddNewTask />
+      console.log('2 request successful data:', data); 
+      
+      self.setState({
+        itemList: data
+      })
+    }
+    GetQuery(this.props.token, callRepleaceAll)
+
+    console.log('new itemList:', this.state.itemList); 
+  }
+
+  handleUpdateData = (data) => {
+    this.setState({
+      itemList: data
+    })
+  };
+
+  render() {
+    const { classes, token } = this.props;
+    return (
+      <React.Fragment>
+        <CssBaseline />
+        <main>
+          {/* Hero unit */}
+          <div className={classes.heroUnit}>
+            <div className={classes.heroContent}>
+              <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+                  To-Do
+              </Typography>
+              <Typography variant="h6" align="center" color="textSecondary" paragraph>
+                  Very simple To-Do List.
+              </Typography>
+              <div className={classes.heroButtons}>
+                <Grid container spacing={16} justify="center">
+                  <Grid item>
+                    <AddNewTask token={token} itemList={this.state.itemList} handleUpdateData={this.handleUpdateData}/>
+                  </Grid>
+                  <Grid item>
+                    <Button variant="outlined">
+                      Sign out
+                    </Button>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Button variant="outlined">
-                    Sign out
-                  </Button>
-                </Grid>
-              </Grid>
+              </div>
             </div>
           </div>
-        </div>
-        <div className={classNames(classes.layout, classes.cardGrid)}>
-          {/* End hero unit */}
-          <Grid container spacing={16}>
-            {cards.map(card => (
-              <Grid item key={card} sm={6} md={4} lg={3}>
-                <Card className={classes.card}>
-                    <CardHeader
-                        title="Shrimp and Chorizo Paella"
-                    />
-                    <CardContent className={classes.cardContent}>
-                        <Typography>
-                            This is a media card. You can use this section to describe the content.
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small" color="primary">
-                            Done
-                        </Button>
-                        <Button size="small" color="primary">
-                            Edit
-                        </Button>
-                        <Button size="small" color="primary">
-                            Delete
-                        </Button>
-                    </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </div>
-      </main>
-    </React.Fragment>
-  );
+          <TodoList itemList={this.state.itemList} />
+          {/* <div className={classNames(classes.layout, classes.cardGrid)}> */}
+            {/* End hero unit */}
+            {/* <Grid container spacing={16}>
+              {cards.map(card => (
+                <Grid item key={card} sm={6} md={4} lg={3}>
+                  <Card className={classes.card}>
+                      <CardHeader
+                          title="Shrimp and Chorizo Paella"
+                      />
+                      <CardContent className={classes.cardContent}>
+                          <Typography>
+                              This is a media card. You can use this section to describe the content.
+                          </Typography>
+                      </CardContent>
+                      <CardActions>
+                          <Button size="small" color="primary">
+                              Done
+                          </Button>
+                          <Button size="small" color="primary">
+                              Edit
+                          </Button>
+                          <Button size="small" color="primary">
+                              Delete
+                          </Button>
+                      </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </div> */}
+        </main>
+      </React.Fragment>
+    );
+  }
 }
+
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(App);
