@@ -31,6 +31,13 @@ const styles = theme => ({
     padding: theme.spacing.unit * 4,
     outline: 'none',
   },
+  textAddTask:{
+    width: '100%',
+    textAlign: 'center',
+  },
+  btnAddTask:{
+    width: '100%',
+  },
 });
 
 class SimpleModal extends React.Component {
@@ -111,7 +118,7 @@ class SimpleModal extends React.Component {
           onClose={this.handleClose}
         >
           <div style={getModalStyle()} className={classes.paper}>
-            <Typography variant="h6" id="modal-title">
+            <Typography variant="h6" id="modal-title" className={classes.textAddTask} >
               Add Task
             </Typography>
             <FormControl margin="normal" required fullWidth>
@@ -124,10 +131,9 @@ class SimpleModal extends React.Component {
                     multiline={true}
                     rows={5}
                     rowsMax={5}
-                    autoFocus
                 />
             </FormControl>
-            <Button onClick={this.handleRepleaceAll} variant="contained" color="primary">
+            <Button onClick={this.handleRepleaceAll} variant="contained" color="primary" className={classes.btnAddTask}>
                 Add Task
             </Button>
           </div>
