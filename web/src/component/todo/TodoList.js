@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import CardHeader from '@material-ui/core/CardHeader';
 import green from '@material-ui/core/colors/green';
 import grey from '@material-ui/core/colors/grey';
+import DoneChip from'./DoneChip.js';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -87,12 +88,10 @@ class TodoList extends React.Component{
                 <Card className={classes.card}>
                     <CardHeader 
                         className={item.Selected?classes.defaultTaskColor:classes.doneTaskColor}
-                        title={item.Text}
                         action={
-                          <Typography>
-                            {item.Selected?"Done":""}
-                          </Typography>
+                          <DoneChip selected={item.Selected}/>
                         }
+                        title={item.Text}
                     />
                     <CardContent className={classes.cardContent}>
                         <Typography>
