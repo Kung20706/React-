@@ -6,11 +6,11 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import CardHeader from '@material-ui/core/CardHeader';
 import green from '@material-ui/core/colors/green';
 import grey from '@material-ui/core/colors/grey';
 import DoneChip from'./DoneChip.js';
+import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -94,9 +94,15 @@ class TodoList extends React.Component{
                         title={item.Text}
                     />
                     <CardContent className={classes.cardContent}>
-                        <Typography>
-                            {item.Content}
-                        </Typography>
+                        <TextField
+                          fullWidth={true}
+                          disabled={true}
+                          value={item.Content}
+                          placeholder="Content"
+                          multiline={true}
+                          rows={5}
+                          rowsMax={5}
+                        />
                     </CardContent>
                     <CardActions>
                         <Button size="small" color="primary" value={count-1} onClick={this.props.handleUpdateSelected} >
