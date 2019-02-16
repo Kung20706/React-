@@ -11,6 +11,7 @@ import green from '@material-ui/core/colors/green';
 import grey from '@material-ui/core/colors/grey';
 import DoneChip from'./DoneChip.js';
 import TextField from '@material-ui/core/TextField';
+import EditTask from './EditTask';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -75,16 +76,20 @@ const styles = theme => ({
   },
 });
 
+const generateKey = (str, str2, str3) => {
+  return new Date() + Math.random() + str + str2 + str3;
+}
+
 class TodoList extends React.Component{
   render(){
       const { classes } = this.props;
-      let count = 0;
+      let indexOfCard = -1;
       let todoitems = [];
 
       this.props.itemList.forEach((item) => {
-          count +=1;
+        indexOfCard +=1;
           todoitems.push(
-            <Grid item key={count} xs={12} sm={6} md={4} lg={3}>
+            <Grid item key={generateKey(item.Text, item.Content, indexOfCard)} xs={12} sm={6} md={4} lg={3}>
                 <Card className={classes.card}>
                     <CardHeader 
                         className={item.Selected?classes.defaultTaskColor:classes.doneTaskColor}
@@ -105,13 +110,11 @@ class TodoList extends React.Component{
                         />
                     </CardContent>
                     <CardActions>
-                        <Button size="small" color="primary" value={count-1} onClick={this.props.handleUpdateSelected} >
+                        <Button size="small" color="primary" value={indexOfCard} onClick={this.props.handleUpdateSelected} >
                             Done
                         </Button>
-                        <Button size="small" color="primary" value={count-1} >
-                            Edit
-                        </Button>
-                        <Button size="small" color="primary" value={count-1} onClick={this.props.handleDeleteDialog}>
+                        <EditTask title={item.Text} content={item.Content} indexOfCard={indexOfCard} handleEditOK={this.props.handleEditOK} />
+                        <Button size="small" color="primary" value={indexOfCard} onClick={this.props.handleDeleteDialog}>
                             Delete
                         </Button>
                     </CardActions>
