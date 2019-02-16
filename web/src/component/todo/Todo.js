@@ -9,6 +9,7 @@ import AddNewTask from './AddNewTask';
 import GetQuery from './HttpMethods/GetQuery';
 import PostRepleaceAll from './HttpMethods/PostRepleaceAll';
 import TodoList from'./TodoList.js';
+import DialogOfDeleteItem from'./DialogOfDeleteItem.js';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -73,9 +74,12 @@ class App extends React.Component {
 
     this.state = {
       itemList: [],
+      deleteIndex: -1,
+      open: false,
     };
 
     this.handleUpdateSelected = this.handleUpdateSelected.bind(this);
+    this.handleDeleteItem = this.handleDeleteItem.bind(this);
   }
 
   componentDidMount(){
@@ -97,9 +101,33 @@ class App extends React.Component {
     console.log('new itemList:', this.state.itemList); 
   }
 
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleDeleteItem(event) {
+    this.setState({ 
+      open: true,
+      deleteIndex: event.currentTarget.value,
+    });
+  }
+
+  handleDiscard = () => {
+    let index = this.state.deleteIndex;
+    let newArray = [...this.state.itemList]
+    newArray.splice(index, 1); 
+
+    console.log('delete, index:'+ index); 
+    console.log('old Array:', this.state.itemList); 
+    console.log('new Array:', newArray); 
+
+    this.handleRepleaceAll(newArray)
+  }
+
   handleUpdateData = (data) => {
     this.setState({
-      itemList: data
+      open: false,
+      itemList: data,
     })
   };
 
@@ -158,7 +186,12 @@ class App extends React.Component {
               </div>
             </div>
           </div>
-          <TodoList itemList={this.state.itemList} handleUpdateSelected={this.handleUpdateSelected} />
+          <TodoList itemList={this.state.itemList} handleUpdateSelected={this.handleUpdateSelected}  handleDeleteItem={this.handleDeleteItem}/>
+          <DialogOfDeleteItem
+            open={this.state.open}
+            onClose={this.handleClose}
+            handleDiscard={this.handleDiscard}
+          />
         </main>
       </React.Fragment>
     );
