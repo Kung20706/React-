@@ -83,7 +83,7 @@ class TodoList extends React.Component{
       this.props.itemList.forEach((item) => {
           count +=1;
           todoitems.push(
-            <Grid item key={count} sm={6} md={4} lg={3}>
+            <Grid item key={count} xs={12} sm={6} md={4} lg={3}>
                 <Card className={classes.card}>
                     <CardHeader 
                         className={item.Selected?classes.defaultTaskColor:classes.doneTaskColor}
