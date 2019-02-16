@@ -24,12 +24,12 @@ class DialogOfDeleteItem extends React.Component {
     this.props.onClose();
   };
 
-  handleDiscard = () => {
-    this.props.handleDiscard();
+  handleDelete = () => {
+    this.props.handleDelete();
   };
 
   render() {
-    const { handleDiscard, ...other } = this.props;
+    const { handleDelete, ...other } = this.props;
     return (
       <Dialog
         disableBackdropClick
@@ -40,15 +40,15 @@ class DialogOfDeleteItem extends React.Component {
       >
         <DialogContent>
             <DialogContentText>
-                Discard task?
+                Delete task?
             </DialogContentText>
         </DialogContent>
         <DialogActions>
             <Button onClick={this.handleCancel} color="primary">
                 Cancel
             </Button>
-            <Button onClick={this.handleDiscard} color="primary">
-                Discard
+            <Button onClick={this.handleDelete} color="primary">
+                Delete
             </Button>
         </DialogActions>
       </Dialog>

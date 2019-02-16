@@ -106,7 +106,7 @@ class TodoList extends React.Component{
                         <Button size="small" color="primary" value={count-1} >
                             Edit
                         </Button>
-                        <Button size="small" color="primary" value={count-1} onClick={this.props.handleDeleteItem}>
+                        <Button size="small" color="primary" value={count-1} onClick={this.props.handleDeleteDialog}>
                             Delete
                         </Button>
                     </CardActions>

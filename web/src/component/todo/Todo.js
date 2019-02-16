@@ -79,7 +79,7 @@ class App extends React.Component {
     };
 
     this.handleUpdateSelected = this.handleUpdateSelected.bind(this);
-    this.handleDeleteItem = this.handleDeleteItem.bind(this);
+    this.handleDeleteDialog = this.handleDeleteDialog.bind(this);
   }
 
   componentDidMount(){
@@ -105,14 +105,14 @@ class App extends React.Component {
     this.setState({ open: false });
   };
 
-  handleDeleteItem(event) {
+  handleDeleteDialog(event) {
     this.setState({ 
       open: true,
       deleteIndex: event.currentTarget.value,
     });
   }
 
-  handleDiscard = () => {
+  handleDelete = () => {
     let index = this.state.deleteIndex;
     let newArray = [...this.state.itemList]
     newArray.splice(index, 1); 
@@ -186,11 +186,11 @@ class App extends React.Component {
               </div>
             </div>
           </div>
-          <TodoList itemList={this.state.itemList} handleUpdateSelected={this.handleUpdateSelected}  handleDeleteItem={this.handleDeleteItem}/>
+          <TodoList itemList={this.state.itemList} handleUpdateSelected={this.handleUpdateSelected}  handleDeleteDialog={this.handleDeleteDialog}/>
           <DialogOfDeleteItem
             open={this.state.open}
             onClose={this.handleClose}
-            handleDiscard={this.handleDiscard}
+            handleDelete={this.handleDelete}
           />
         </main>
       </React.Fragment>
