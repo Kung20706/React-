@@ -1,18 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import classNames from 'classnames';
 import Button from '@material-ui/core/Button';
-// import Card from '@material-ui/core/Card';
-// import CardActions from '@material-ui/core/CardActions';
-// import CardContent from '@material-ui/core/CardContent';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-// import CardHeader from '@material-ui/core/CardHeader';
 import green from '@material-ui/core/colors/green';
 import AddNewTask from './AddNewTask';
 import GetQuery from './HttpMethods/GetQuery';
-// import TodoItemDetail from'./TodoItemDetail';
+import PostRepleaceAll from './HttpMethods/PostRepleaceAll';
 import TodoList from'./TodoList.js';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -73,9 +68,15 @@ const styles = theme => ({
 });
 
 class App extends React.Component {
-  state = {
-    itemList: [],
-  };
+  constructor() {
+    super();
+
+    this.state = {
+      itemList: [],
+    };
+
+    this.handleUpdateSelected = this.handleUpdateSelected.bind(this);
+  }
 
   componentDidMount(){
     let self = this;
@@ -100,6 +101,32 @@ class App extends React.Component {
     this.setState({
       itemList: data
     })
+  };
+
+  handleUpdateSelected(event) {
+    console.log('value:'+ event.currentTarget.value); 
+
+    let index = event.currentTarget.value;
+
+    let newArray = [...this.state.itemList];
+    newArray[index].Selected = !newArray[index].Selected
+
+    this.handleRepleaceAll(newArray)
+  };
+
+  handleRepleaceAll = (newArray) => {
+    let self = this;
+    var callRepleaceAll = function(data){ 
+      if(!data){
+        console.log('request fail data:', data); 
+        return
+      }
+      console.log('request successful data:', data); 
+      self.handleUpdateData(data)
+    }
+
+    let data = JSON.stringify(newArray);
+    PostRepleaceAll(this.props.token, data, callRepleaceAll)
   };
 
   render() {
@@ -131,37 +158,7 @@ class App extends React.Component {
               </div>
             </div>
           </div>
-          <TodoList itemList={this.state.itemList} />
-          {/* <div className={classNames(classes.layout, classes.cardGrid)}> */}
-            {/* End hero unit */}
-            {/* <Grid container spacing={16}>
-              {cards.map(card => (
-                <Grid item key={card} sm={6} md={4} lg={3}>
-                  <Card className={classes.card}>
-                      <CardHeader
-                          title="Shrimp and Chorizo Paella"
-                      />
-                      <CardContent className={classes.cardContent}>
-                          <Typography>
-                              This is a media card. You can use this section to describe the content.
-                          </Typography>
-                      </CardContent>
-                      <CardActions>
-                          <Button size="small" color="primary">
-                              Done
-                          </Button>
-                          <Button size="small" color="primary">
-                              Edit
-                          </Button>
-                          <Button size="small" color="primary">
-                              Delete
-                          </Button>
-                      </CardActions>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-          </div> */}
+          <TodoList itemList={this.state.itemList} handleUpdateSelected={this.handleUpdateSelected} />
         </main>
       </React.Fragment>
     );

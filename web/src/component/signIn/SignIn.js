@@ -196,6 +196,4 @@ SignIn.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-// export default withStyles(styles)(SignIn);
-
 export default withStyles(styles)(connect(null, mapDispatchToProps)(SignIn));
