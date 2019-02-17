@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import green from '@material-ui/core/colors/green';
 import AddNewTask from './AddNewTask';
 import FloatingActionButtonZoom from './FloatingActionButtonZoom';
-import EditTask from './EditTask';
 import GetQuery from './HttpMethods/GetQuery';
 import PostRepleaceAll from './HttpMethods/PostRepleaceAll';
 import TodoList from'./TodoList.js';
@@ -161,11 +160,6 @@ class App extends React.Component {
   };
 
   handleEditOK = (indexOfCard, title, content) => {
-    console.log('handleEditOK:'); 
-    console.log('indexOfCard:'+ indexOfCard); 
-    console.log('title:'+ title); 
-    console.log('content:'+ content); 
-
     let newArray = [...this.state.itemList];
     newArray[indexOfCard].Text = title
     newArray[indexOfCard].Content = content

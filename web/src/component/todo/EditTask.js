@@ -8,8 +8,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
-import PostRepleaceAll from './HttpMethods/PostRepleaceAll';
-import TodoItemDetail from'./TodoItemDetail';
 
 function getModalStyle() {
   const top = 50;
