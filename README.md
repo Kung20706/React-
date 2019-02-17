@@ -12,6 +12,13 @@
 
 此專案練習建構待辦清單網站，後端以 beego建構，前端則以 react建構。利用 material-ui的 Grid system製作 RWD響應式網站。
 
+# 預覽
+
+![image](https://github.com/lya79/todo_app/blob/master/01.png)
+![image](https://github.com/lya79/todo_app/blob/master/02.png)
+![image](https://github.com/lya79/todo_app/blob/master/03.png)
+![image](https://github.com/lya79/todo_app/blob/master/04.png)
+
 # 安裝
 
 STEP 1. 專案 clone至 GOPATH的 src目錄底下
