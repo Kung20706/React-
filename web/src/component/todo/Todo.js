@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import green from '@material-ui/core/colors/green';
 import AddNewTask from './AddNewTask';
+import FloatingActionButtonZoom from './FloatingActionButtonZoom';
 import EditTask from './EditTask';
 import GetQuery from './HttpMethods/GetQuery';
 import PostRepleaceAll from './HttpMethods/PostRepleaceAll';
@@ -202,6 +203,7 @@ class App extends React.Component {
             </div>
           </div>
           <TodoList itemList={this.state.itemList} handleUpdateSelected={this.handleUpdateSelected}  handleDeleteDialog={this.handleDeleteDialog} handleEditOK={this.handleEditOK}/>
+          <FloatingActionButtonZoom token={token} itemList={this.state.itemList} handleUpdateData={this.handleUpdateData}/>
           <DialogOfDeleteItem
             open={this.state.open}
             onClose={this.handleClose}

@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import Hidden from '@material-ui/core/Hidden';
+
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
@@ -10,6 +14,33 @@ import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import PostRepleaceAll from './HttpMethods/PostRepleaceAll';
 import TodoItemDetail from'./TodoItemDetail';
+
+// const styles = theme => ({
+//   fab: {
+//     position: 'fixed',
+//     bottom:16,
+//     right:16,
+//   },
+// });
+
+// class FloatingActionButtonZoom  extends Component {
+//   render() {
+//     const { classes } = this.props;
+//     return(
+//       <Hidden smUp>
+//         <Fab color="primary" aria-label="Add" className={classes.fab}>
+//           <AddIcon />
+//         </Fab>
+//       </Hidden>
+//     )
+//   }
+// }
+
+// FloatingActionButtonZoom .propTypes = {
+//   classes: PropTypes.object.isRequired,
+// }
+
+// export default withStyles(styles)(FloatingActionButtonZoom );
 
 function getModalStyle() {
   const top = 50;
@@ -37,6 +68,11 @@ const styles = theme => ({
   },
   btnAddTask:{
     width: '100%',
+  },
+  fab: {
+    position: 'fixed',
+    bottom:16,
+    right:16,
   },
 });
 
@@ -112,9 +148,14 @@ class SimpleModal extends React.Component {
 
     return (
       <div>
-        <Button onClick={this.handleOpen} variant="contained" color="primary">
+        {/* <Button onClick={this.handleOpen} variant="contained" color="primary">
           Add Task
-        </Button>
+        </Button> */}
+        <Hidden smUp>
+          <Fab color="primary" aria-label="Add" className={classes.fab}>
+            <AddIcon onClick={this.handleOpen}/>
+          </Fab>
+        </Hidden>
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
