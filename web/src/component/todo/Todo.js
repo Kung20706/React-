@@ -12,6 +12,14 @@ import PostRepleaceAll from './HttpMethods/PostRepleaceAll';
 import TodoList from'./TodoList.js';
 import DialogOfDeleteItem from'./DialogOfDeleteItem.js';
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from "react-redux";
+import { updateToken } from "../../redux/actions/update_token";
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateToken: token => dispatch(updateToken(token))
+  };
+};
 
 const styles = theme => ({
   appBar: {
@@ -167,6 +175,10 @@ class App extends React.Component {
     this.handleRepleaceAll(newArray)
   }
 
+  handleSignOut = () => {
+    this.props.updateToken('');
+  };
+
   render() {
     const { classes, token } = this.props;
     return (
@@ -188,7 +200,7 @@ class App extends React.Component {
                     <AddNewTask token={token} itemList={this.state.itemList} handleUpdateData={this.handleUpdateData}/>
                   </Grid>
                   <Grid item>
-                    <Button variant="outlined">
+                    <Button variant="outlined" onClick={this.handleSignOut}>
                       Sign out
                     </Button>
                   </Grid>
@@ -215,4 +227,5 @@ App.propTypes = {
   token: PropTypes.string.isRequired,
 };
 
-export default withStyles(styles)(App);
+// export default withStyles(styles)(App);
+export default withStyles(styles)(connect(null, mapDispatchToProps)(App));
